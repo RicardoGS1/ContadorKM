@@ -20,6 +20,10 @@ fun HomeScreen(bottomPadding: Dp = 0.dp,
 fun MyGoogleMaps()
 {
 
+
+
+
+
     GoogleMap(modifier = Modifier.fillMaxSize())
 
 }
