@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-
+import com.virtualworld.contadorkm.ui.screen.currentrun.CurrentRunScreen
 
 
 @Composable
@@ -25,7 +25,7 @@ private fun SetupNavGraph(navController: NavHostController, paddingValues: Paddi
         }
 
         composable(route = Destination.CurrentRun.route, deepLinks = Destination.CurrentRun.deepLinks) {
-           //   CurrentRunScreen(navController)
+              CurrentRunScreen(navController)
         }
 
         composable(route = Destination.OnBoardingDestination.route) {
