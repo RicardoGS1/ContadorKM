@@ -1,4 +1,4 @@
-package com.virtualworld.contadorkm.ui.screen.main
+package com.virtualworld.contadorkm.navegation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutLinearInEasing
@@ -23,16 +23,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.virtualworld.contadorkm.R
-import com.virtualworld.contadorkm.navegation.BottomNavDestination
-import com.virtualworld.contadorkm.navegation.Destination
-import com.virtualworld.contadorkm.navegation.navigateToBottomNavDestination
 
 
 const val slideDownInDuration = 250
@@ -44,7 +38,7 @@ fun AppBottomFAB(navHostController: NavController,visible: Boolean)
     AnimatedVisibility(visible = visible,
                        enter = scaleIn(animationSpec = tween(150)),
                        exit = scaleOut(animationSpec = tween(150)),
-                      ){  FloatingActionButton(onClick = { navHostController.navigate(Destination.CurrentRun.route) },
+                      ){  FloatingActionButton(onClick = { navHostController.navigate(BottomBarNavDestination.CurrentRun.route) },
                                                contentColor = MaterialTheme.colorScheme.onPrimary,
                                                containerColor = MaterialTheme.colorScheme.primary,
                                                shape = CircleShape,
@@ -53,7 +47,7 @@ fun AppBottomFAB(navHostController: NavController,visible: Boolean)
                                                    .offset(y = 50.dp)
     ) {
         Icon(
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_run),
+            imageVector = BottomBarNavDestination.CurrentRun.getIconVector(),
             contentDescription = "",
         )
     }
@@ -82,15 +76,16 @@ fun AppBottomBar(visible: Boolean, navController: NavController)
                                        ambientColor = MaterialTheme.colorScheme.primary,
                                        spotColor = MaterialTheme.colorScheme.primary,
                                        clip = true)) {
-                               BottomNavBar(navController = navController,
-                                            items = listOf(BottomNavDestination.Home, BottomNavDestination.Profile),
+                               BottomNavBar(
+                                   navController = navController,
+                                   items = listOf(BottomBarNavDestination.Home, BottomBarNavDestination.Profile),
                                             )
                            }
                        })
 }
 
 @Composable
-private fun BottomNavBar(navController: NavController,  items: List<BottomNavDestination>)
+private fun BottomNavBar(navController: NavController, items: List<BottomBarNavDestination>)
 {
 
     NavigationBar(

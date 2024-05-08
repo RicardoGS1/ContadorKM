@@ -18,8 +18,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.virtualworld.contadorkm.navegation.AppBottomBar
+import com.virtualworld.contadorkm.navegation.AppBottomFAB
 
-import com.virtualworld.contadorkm.navegation.Destination
+import com.virtualworld.contadorkm.navegation.DestinationApp
 import com.virtualworld.contadorkm.navegation.Navigation
 
 import kotlinx.coroutines.delay
@@ -31,19 +33,17 @@ fun MainScreen(navHostController: NavHostController, viewModel: MainScreenViewMo
     //observar la navegación
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
 
-    var shouldShowBottomNav by rememberSaveable { mutableStateOf(false) }//mostrar bottomBar
-    var shouldShowFAB by rememberSaveable { mutableStateOf(false) }      //mostrar FAB
-    var hideBottomItems by rememberSaveable { mutableStateOf(true) }     //ocultar bottomBar
+    var shouldShowBottomNav by rememberSaveable { mutableStateOf(false) }//mostrar bottomBar para anmasoion
+    var shouldShowFAB by rememberSaveable { mutableStateOf(false) }      //mostrar FAB para animacion
+    var hideBottomItems by rememberSaveable { mutableStateOf(true) }     //la barra completa
 
-    // val doesUserExist by viewModel.doesUserExist.collectAsStateWithLifecycle()
 
-    val doesUserExist = true
 
     //modifica (hideBottomItems) para ocultar los botones si esta la screen is ruun o boarding
     hideBottomItems = when (navBackStackEntry?.destination?.route)
     {
-        Destination.CurrentRun.route -> true
-        Destination.OnBoardingDestination.route -> true
+        DestinationApp.CurrentRun.route -> true
+        DestinationApp.OnBoardingDestination.route -> true
         else -> false
     }
 
@@ -65,13 +65,15 @@ fun MainScreen(navHostController: NavHostController, viewModel: MainScreenViewMo
         }
     }
 
+
+
     Scaffold(
         bottomBar = {
-            AppBottomBar(navController = navHostController,visible = shouldShowBottomNav && doesUserExist == true)
+            AppBottomBar(navController = navHostController,visible = shouldShowBottomNav)
         },
 
         floatingActionButton = {
-            AppBottomFAB(navHostController = navHostController, visible = shouldShowFAB && doesUserExist == true)
+            AppBottomFAB(navHostController = navHostController, visible = shouldShowFAB)
         },
 
         floatingActionButtonPosition = FabPosition.Center,

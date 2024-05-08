@@ -1,4 +1,4 @@
-package com.virtualworld.contadorkm
+package com.virtualworld.contadorkm.core.location
 
 import com.google.android.gms.location.LocationCallback
 

@@ -43,7 +43,7 @@ import com.google.maps.android.compose.rememberMarkerState
 import com.virtualworld.contadorkm.core.location.LocationUtils
 import com.virtualworld.contadorkm.R
 
-import com.virtualworld.contadorkm.bitmapDescriptorFromVector
+import com.virtualworld.contadorkm.ui.util.bitmapDescriptorFromVector
 import com.virtualworld.contadorkm.ui.theme.ContadorKMTheme
 
 @Composable

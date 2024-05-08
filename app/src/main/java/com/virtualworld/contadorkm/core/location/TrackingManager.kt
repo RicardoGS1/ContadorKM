@@ -1,4 +1,4 @@
-package com.sdevprem.runtrack.core.tracking
+package com.virtualworld.contadorkm.core.location
 
 import android.location.Location
 import com.google.android.gms.location.LocationCallback
@@ -6,10 +6,8 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
 
 
-import com.virtualworld.contadorkm.LocationTrackingManager
-import com.virtualworld.contadorkm.PointCurrent
-import com.virtualworld.contadorkm.TimeTracker
-import com.virtualworld.contadorkm.TrackingServiceManager
+import com.virtualworld.contadorkm.core.model.PointCurrent
+
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -19,9 +17,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TrackingManager @Inject constructor(private val locationTrackingManager: LocationTrackingManager,
-                                          private val timeTracker: TimeTracker,
-                                          private val trackingServiceManager: TrackingServiceManager)
+class TrackingManager @Inject constructor(private val locationTrackingManager: LocationTrackingManager)
+
 {
     private var isTracking = false
 

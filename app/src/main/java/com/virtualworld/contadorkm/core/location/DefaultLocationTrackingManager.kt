@@ -1,4 +1,4 @@
-package com.sdevprem.runtrack.core.tracking.location
+package com.virtualworld.contadorkm.core.location
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,7 +7,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 
-import com.virtualworld.contadorkm.LocationTrackingManager
+import com.virtualworld.contadorkm.core.location.LocationTrackingManager
 
 import com.virtualworld.contadorkm.ui.hasLocationPermission
 import dagger.hilt.android.qualifiers.ApplicationContext

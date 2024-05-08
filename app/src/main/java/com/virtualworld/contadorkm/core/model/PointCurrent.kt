@@ -1,4 +1,4 @@
-package com.virtualworld.contadorkm
+package com.virtualworld.contadorkm.core.model
 
 import com.google.android.gms.maps.model.LatLng
 
