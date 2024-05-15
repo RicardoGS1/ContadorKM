@@ -1,4 +1,4 @@
-package com.virtualworld.contadorkm.ui
+package com.virtualworld.contadorkm
 
 import android.graphics.BitmapFactory
 import android.net.Uri
