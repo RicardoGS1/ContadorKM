@@ -40,12 +40,12 @@ import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import com.virtualworld.contadorkm.R
-import com.virtualworld.contadorkm.RunUtils
-import com.virtualworld.contadorkm.RunUtils.firstLocationPoint
-import com.virtualworld.contadorkm.RunUtils.lasLocationPoint
-import com.virtualworld.contadorkm.core.model.PathPoint
-import com.virtualworld.contadorkm.ui.util.bitmapDescriptorFromVector
-
+import com.virtualworld.contadorkm.domain.utils.RunUtils
+import com.virtualworld.contadorkm.domain.utils.RunUtils.firstLocationPoint
+import com.virtualworld.contadorkm.domain.utils.RunUtils.lasLocationPoint
+import com.virtualworld.contadorkm.core.location.model.PathPoint
+import com.virtualworld.contadorkm.ui.theme.md_theme_light_primary
+import com.virtualworld.contadorkm.ui.utils.bitmapDescriptorFromVector
 
 
 @OptIn(MapsComposeExperimentalApi::class)
@@ -57,21 +57,29 @@ fun BoxScope.MyMaps(
     onSnapshot: (Bitmap) -> Unit,
 )
 {
+    //var state
     var mapSize by remember { mutableStateOf(Size(0f, 0f)) }
     var mapCenter by remember { mutableStateOf(Offset(0f, 0f)) }
     var isMapLoaded by remember { mutableStateOf(false) }
+
+    //val state
     val cameraPositionState = rememberCameraPositionState {}
     val mapUiSettings by remember {
         mutableStateOf(MapUiSettings(mapToolbarEnabled = false, compassEnabled = true, zoomControlsEnabled = false))
     }
 
+    ShowMapLoadingProgressBar(isMapLoaded)
+
+    //obtiene el ultimo punto and animate camera only changer pathPoint
     LaunchedEffect(key1 = pathPoints.lasLocationPoint()) {
+
+        //devuelve el último objeto PathPoint.LocationPoint encontrado en la lista de objetos PathPoint
         pathPoints.lasLocationPoint()?.let {
             cameraPositionState.animate(CameraUpdateFactory.newCameraPosition(CameraPosition.fromLatLngZoom(it.latLng, 15f)))
         }
-
     }
-    ShowMapLoadingProgressBar(isMapLoaded)
+
+
     GoogleMap(
         modifier = modifier
             .fillMaxSize()
@@ -85,8 +93,10 @@ fun BoxScope.MyMaps(
 
         ) {
 
+        //envia los puntos a ser dibujados
         DrawPathPoints(pathPoints = pathPoints, isRunningFinished = isRunningFinished)
 
+        //centra la camara al terminar
         MapEffect(key1 = isRunningFinished) { map ->
             if (isRunningFinished) RunUtils.takeSnapshot(map, pathPoints, mapCenter, onSnapshot, snapshotSideLength = mapSize.width / 2)
         }
@@ -100,24 +110,30 @@ private fun DrawPathPoints(
     isRunningFinished: Boolean,
 )
 {
+    //guarada el ultimo punto de lastLocationPoint
     val lastMarkerState = rememberMarkerState()
-    val lastLocationPoint = pathPoints.lasLocationPoint()
-    lastLocationPoint?.let { lastMarkerState.position = it.latLng }
 
+    val lastLocationPoint = pathPoints.lasLocationPoint()
+    lastLocationPoint?.let {
+        lastMarkerState.position = it.latLng }
+
+    //recuerda el valor de firstLocationPoint
     val firstLocationPoint = pathPoints.firstLocationPoint()
     val firstPoint = remember(key1 = firstLocationPoint) { firstLocationPoint }
 
     val latLngList = mutableListOf<LatLng>()
 
+
     pathPoints.forEach { pathPoint ->
-        if (pathPoint is PathPoint.EmptyLocationPoint)
+        if (pathPoint is PathPoint.EmptyLocationPoint)     //EmptyLocationPoint if is paused
         {
             Polyline(
                 points = latLngList.toList(),
                 color = md_theme_light_primary,
             )
             latLngList.clear()
-        } else if (pathPoint is PathPoint.LocationPoint)
+        }
+        else if (pathPoint is PathPoint.LocationPoint)
         {
             latLngList += pathPoint.latLng
         }
@@ -131,6 +147,7 @@ private fun DrawPathPoints(
                                                                 targetValue = md_theme_light_primary.copy(alpha = 0.8f),
                                                                 animationSpec = infiniteRepeatable(tween(1000), repeatMode = RepeatMode.Reverse))
 
+    //only marcar lastMaker ultimo punto
     Marker(icon = bitmapDescriptorFromVector(context = LocalContext.current,
                                              vectorResId = R.drawable.ic_circle,
                                              tint = (if (isRunningFinished) md_theme_light_primary else lastMarkerPointColor).toArgb()),
@@ -138,6 +155,7 @@ private fun DrawPathPoints(
            anchor = Offset(0.5f, 0.5f),
            visible = lastLocationPoint != null)
 
+    // only marca el primer punto
     firstPoint?.let {
         Marker(icon = bitmapDescriptorFromVector(context = LocalContext.current,
                                                  vectorResId = if (isRunningFinished) R.drawable.ic_circle else R.drawable.ic_circle_hollow,

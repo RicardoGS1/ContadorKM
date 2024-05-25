@@ -27,7 +27,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
 import com.virtualworld.contadorkm.ui.screen.main.MainScreen
 import com.virtualworld.contadorkm.ui.theme.ContadorKMTheme
-import com.virtualworld.contadorkm.ui.util.LocationPermissionRequestDialog
+import com.virtualworld.contadorkm.ui.utils.LocationPermissionRequestDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 

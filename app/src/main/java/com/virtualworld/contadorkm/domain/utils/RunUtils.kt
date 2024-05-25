@@ -1,75 +1,25 @@
-package com.virtualworld.contadorkm
+package com.virtualworld.contadorkm.domain.utils
 
-import android.Manifest
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Bitmap
 import android.location.Location
-import android.net.Uri
-import android.os.Build
-import android.provider.Settings
-import androidx.annotation.RequiresApi
 import androidx.compose.ui.geometry.Offset
-import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLngBounds
-import com.sdevprem.runtrack.core.tracking.model.PathPoint
+
+import com.virtualworld.contadorkm.core.location.model.PathPoint
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
 
+//reglas de negocio
 object RunUtils {
 
-    val locationPermissions = listOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
-    ).toTypedArray()
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    val notificationPermission = Manifest.permission.POST_NOTIFICATIONS
-
-    val allPermissions = mutableListOf<String>().apply {
-        addAll(locationPermissions)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            add(notificationPermission)
-        }
-    }.toTypedArray()
-
-    fun Context.hasNotificationPermission() =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(
-                this,
-                notificationPermission
-            ) == PERMISSION_GRANTED
-        } else true
 
 
-    fun Context.hasLocationPermission() =
-        locationPermissions.all {
-            ContextCompat.checkSelfPermission(
-                this,
-                it
-            ) == PERMISSION_GRANTED
-        }
 
-    fun Context.hasAllPermission() =
-        allPermissions.all {
-            ContextCompat.checkSelfPermission(
-                this,
-                it
-            ) == PERMISSION_GRANTED
-        }
-
-    fun Context.openAppSetting() {
-        Intent(
-            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-            Uri.fromParts("package", packageName, null)
-        ).also(::startActivity)
-    }
 
     fun getFormattedStopwatchTime(ms: Long, includeMillis: Boolean = false): String {
         var milliseconds = ms
@@ -163,10 +113,12 @@ object RunUtils {
         }
     }
 
+    //devuelve el último objeto PathPoint.LocationPoint encontrado en la lista de objetos PathPoint o null
     fun List<PathPoint>.lasLocationPoint(): PathPoint.LocationPoint? {
-        for (i in lastIndex downTo 0)
+        for (i in lastIndex downTo 0){
             if (get(i) is PathPoint.LocationPoint)
                 return get(i) as PathPoint.LocationPoint
+        }
         return null
     }
 

@@ -1,7 +1,7 @@
-package com.virtualworld.contadorkm.domain
+package com.virtualworld.contadorkm.domain.model
 
 
-import com.virtualworld.contadorkm.core.model.CurrentRunState
+import com.virtualworld.contadorkm.core.location.model.CurrentRunState
 
 data class CurrentRunStateWithCalories(
     val currentRunState: CurrentRunState = CurrentRunState(),

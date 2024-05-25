@@ -34,19 +34,19 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.virtualworld.contadorkm.R
-import com.virtualworld.contadorkm.RunUtils
-import com.virtualworld.contadorkm.RunningStatsItem
-import com.virtualworld.contadorkm.domain.CurrentRunStateWithCalories
+import com.virtualworld.contadorkm.domain.utils.RunUtils
+import com.virtualworld.contadorkm.ui.utils.RunningStatsItem
+import com.virtualworld.contadorkm.domain.model.CurrentRunStateWithCalories
 import com.virtualworld.contadorkm.navegation.slideDownInDuration
 import com.virtualworld.contadorkm.navegation.slideDownOutDuration
 
 @Composable
 fun CurrentRunBottomCard(visible: Boolean,
-                        modifier: Modifier,
-                        durationInMillis: Long = 0L,
-                        runState: CurrentRunStateWithCalories,
-                        onPlayPauseButtonClick: () -> Unit = {},
-                        onFinish: () -> Unit)
+                         modifier: Modifier,
+                         durationInMillis: Long = 0L,
+                         runState: CurrentRunStateWithCalories,
+                         onPlayPauseButtonClick: () -> Unit = {},
+                         onFinish: () -> Unit)
 {
 
     AnimatedVisibility(visible = visible,

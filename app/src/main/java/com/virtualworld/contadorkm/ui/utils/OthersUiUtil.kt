@@ -1,4 +1,4 @@
-package com.virtualworld.contadorkm.ui.util
+package com.virtualworld.contadorkm.ui.utils
 
 import android.content.Context
 import android.graphics.Bitmap

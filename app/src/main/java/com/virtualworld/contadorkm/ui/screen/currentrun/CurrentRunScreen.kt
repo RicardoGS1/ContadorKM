@@ -27,52 +27,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-
 import androidx.navigation.NavController
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.GoogleMapComposable
-import com.google.maps.android.compose.MapEffect
-import com.google.maps.android.compose.MapUiSettings
-import com.google.maps.android.compose.MapsComposeExperimentalApi
-import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.Polyline
-import com.google.maps.android.compose.rememberCameraPositionState
-import com.google.maps.android.compose.rememberMarkerState
-import com.virtualworld.contadorkm.ComposeUtils
-
 import com.virtualworld.contadorkm.core.location.LocationUtils
-import com.virtualworld.contadorkm.R
-import com.virtualworld.contadorkm.RunUtils.firstLocationPoint
-import com.virtualworld.contadorkm.RunUtils.lasLocationPoint
-import com.virtualworld.contadorkm.RunUtils.takeSnapshot
-import com.virtualworld.contadorkm.core.model.CurrentRunState
-import com.virtualworld.contadorkm.core.model.PathPoint
-import com.virtualworld.contadorkm.domain.CurrentRunStateWithCalories
-
-
-import com.virtualworld.contadorkm.ui.util.bitmapDescriptorFromVector
 import kotlinx.coroutines.delay
-import java.math.RoundingMode
+
 
 
 @Composable
@@ -80,16 +46,20 @@ fun CurrentRunScreen(navController: NavController, viewModel: CurrentRunViewMode
 {
     val context = LocalContext.current
 
+    //check the location in the sistem is avilited
     LaunchedEffect(key1 = true) {
         LocationUtils.checkAndRequestLocationSetting(context as Activity)
     }
 
 
+    //si fnalizo la carrera
     var isRunningFinished by rememberSaveable { mutableStateOf(false) }
     var shouldShowRunningCard by rememberSaveable { mutableStateOf(false) }
-    val runState by viewModel.currentRunStateWithCalories.collectAsStateWithLifecycle()
-    val runningDurationInMillis by viewModel.runningDurationInMillis.collectAsStateWithLifecycle()
 
+    val runState by viewModel.currentRunStateWithCal.collectAsStateWithLifecycle()//start point in empty
+    val runningDurationInMillis by viewModel.runningDurationInMillis.collectAsStateWithLifecycle() //start in 0
+
+    //show the card running in 0.5 seconds
     LaunchedEffect(key1 = Unit) {
         delay(500)
         shouldShowRunningCard = true

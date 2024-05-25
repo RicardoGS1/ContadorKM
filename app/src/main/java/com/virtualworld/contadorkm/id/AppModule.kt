@@ -7,13 +7,18 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import androidx.room.Room
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.virtualworld.contadorkm.core.data.RunTrackDB
+import com.virtualworld.contadorkm.core.data.RunTrackDB.Companion.RUN_TRACK_DB_NAME
 import com.virtualworld.contadorkm.core.location.DefaultLocationTrackingManager
+import com.virtualworld.contadorkm.core.location.DefaultTrackingServiceManager
 
 import com.virtualworld.contadorkm.core.location.LocationTrackingManager
 
 import com.virtualworld.contadorkm.core.location.LocationUtils
+import com.virtualworld.contadorkm.core.location.TrackingServiceManager
 
 import dagger.Binds
 import dagger.Module
@@ -34,6 +39,26 @@ abstract class AppModule
 
     companion object
     {
+
+
+        //base de datos local
+
+        @Provides
+        @Singleton
+        fun provideRunningDB(
+            @ApplicationContext context: Context
+        ): RunTrackDB = Room.databaseBuilder(
+            context,
+            RunTrackDB::class.java,
+            RUN_TRACK_DB_NAME
+        ).build()
+
+        @Singleton
+        @Provides
+        fun provideRunDao(db: RunTrackDB) = db.getRunDao()
+
+        //fin base dato local
+
 
         private const val USER_PREFERENCES_FILE_NAME = "user_preferences"
 
@@ -65,8 +90,19 @@ abstract class AppModule
         fun provideFusedLocationProviderClient(@ApplicationContext context: Context) = LocationServices.getFusedLocationProviderClient(context)
 
 
-    }
 
+
+
+
+
+
+
+    }
+    @Binds
+    @Singleton
+    abstract fun provideTrackingServiceManager(
+        trackingServiceManager: DefaultTrackingServiceManager
+    ): TrackingServiceManager
 
 
 }

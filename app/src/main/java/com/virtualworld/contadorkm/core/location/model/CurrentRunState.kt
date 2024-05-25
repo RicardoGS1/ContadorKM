@@ -1,4 +1,4 @@
-package com.virtualworld.contadorkm.core.model
+package com.virtualworld.contadorkm.core.location.model
 
 data class CurrentRunState(
     val distanceInMeters: Int = 0,
