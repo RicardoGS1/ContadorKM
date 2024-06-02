@@ -1,4 +1,4 @@
-package com.virtualworld.contadorkm.core.data
+package com.virtualworld.contadorkm.core.data.model
 
 import android.graphics.Bitmap
 import androidx.room.Entity

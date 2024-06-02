@@ -3,8 +3,8 @@ package com.virtualworld.contadorkm.ui.screen.currentrun
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.virtualworld.contadorkm.core.data.Run
-import com.virtualworld.contadorkm.core.data.AppRepository
+import com.virtualworld.contadorkm.core.data.model.Run
+import com.virtualworld.contadorkm.core.data.repository.AppRepository
 import com.virtualworld.contadorkm.core.location.TrackingManager
 
 import com.virtualworld.contadorkm.domain.usecases.GetCurrentRunStateUseCase
@@ -38,8 +38,10 @@ class CurrentRunViewModel @Inject constructor(private val trackingManager: Track
 
     fun playPauseTracking()
     {
-        if (currentRunStateWithCal.value.currentRunState.isTracking) trackingManager.pauseTracking()
-        else trackingManager.startResumeTracking()
+        if (currentRunStateWithCal.value.currentRunState.isTracking)
+            trackingManager.pauseTracking()
+        else
+            trackingManager.startResumeTracking()
     }
 
     fun finishRun(bitmap: Bitmap)

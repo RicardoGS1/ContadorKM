@@ -1,4 +1,4 @@
-package com.virtualworld.contadorkm.core.data
+package com.virtualworld.contadorkm.core.data.util
 
 enum class RunSortOrder {
     DATE,

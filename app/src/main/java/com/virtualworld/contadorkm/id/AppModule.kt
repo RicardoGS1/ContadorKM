@@ -10,15 +10,15 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.virtualworld.contadorkm.core.data.RunTrackDB
-import com.virtualworld.contadorkm.core.data.RunTrackDB.Companion.RUN_TRACK_DB_NAME
+import com.virtualworld.contadorkm.core.data.db.RunTrackDB
+import com.virtualworld.contadorkm.core.data.db.RunTrackDB.Companion.RUN_TRACK_DB_NAME
 import com.virtualworld.contadorkm.core.location.DefaultLocationTrackingManager
-import com.virtualworld.contadorkm.core.location.DefaultTrackingServiceManager
+
 
 import com.virtualworld.contadorkm.core.location.LocationTrackingManager
 
 import com.virtualworld.contadorkm.core.location.LocationUtils
-import com.virtualworld.contadorkm.core.location.TrackingServiceManager
+
 
 import dagger.Binds
 import dagger.Module
@@ -98,11 +98,7 @@ abstract class AppModule
 
 
     }
-    @Binds
-    @Singleton
-    abstract fun provideTrackingServiceManager(
-        trackingServiceManager: DefaultTrackingServiceManager
-    ): TrackingServiceManager
+
 
 
 }

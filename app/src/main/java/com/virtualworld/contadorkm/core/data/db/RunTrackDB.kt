@@ -1,8 +1,9 @@
-package com.virtualworld.contadorkm.core.data
+package com.virtualworld.contadorkm.core.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.virtualworld.contadorkm.core.data.model.Run
 
 
 @Database(

@@ -35,11 +35,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.virtualworld.contadorkm.R
 import com.virtualworld.contadorkm.domain.utils.RunUtils
-import com.virtualworld.contadorkm.ui.utils.RunningStatsItem
+
 import com.virtualworld.contadorkm.domain.model.CurrentRunStateWithCalories
 import com.virtualworld.contadorkm.navegation.slideDownInDuration
 import com.virtualworld.contadorkm.navegation.slideDownOutDuration
 
+
+//animacion de RunningCard
 @Composable
 fun CurrentRunBottomCard(visible: Boolean,
                          modifier: Modifier,
@@ -60,6 +62,7 @@ fun CurrentRunBottomCard(visible: Boolean,
                        })
 }
 
+
 @Composable
 fun RunningCard(modifier: Modifier = Modifier,
                 durationInMillis: Long = 0L,
@@ -68,27 +71,29 @@ fun RunningCard(modifier: Modifier = Modifier,
                 onFinish: () -> Unit)
 {
     ElevatedCard(modifier = modifier.fillMaxWidth(), elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)) {
+
         RunningCardTime(modifier = Modifier
-            .padding(top = 24.dp, start = 20.dp, end = 20.dp, bottom = 16.dp)
+            .padding(top = 8.dp, start = 24.dp, end = 16.dp, bottom = 8.dp)
             .fillMaxWidth(),
                         durationInMillis = durationInMillis,
                         isRunning = runState.currentRunState.isTracking,
                         onPlayPauseButtonClick = onPlayPauseButtonClick,
                         onFinish = onFinish)
 
+
+
+
         Row(horizontalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
                 .padding(horizontal = 20.dp)
-                .padding(bottom = 20.dp)
+                .padding(bottom = 4.dp)
                 .height(IntrinsicSize.Min)
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp, vertical = 4.dp)
 
         ) {
-            RunningStatsItem(modifier = Modifier,
-                             painter = painterResource(id = R.drawable.running_boy),
-                             unit = "km",
-                             value = (runState.currentRunState.distanceInMeters / 1000f).toString())
+
+            RunningStatsItem(modifier = Modifier, unit = "km", value = (runState.currentRunState.distanceInMeters / 1000f).toString())
             Box(modifier = Modifier
                 .width(1.dp)
                 .fillMaxHeight()
@@ -97,29 +102,21 @@ fun RunningCard(modifier: Modifier = Modifier,
                 .background(
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
                 ))
-            RunningStatsItem(modifier = Modifier, painter = painterResource(id = R.drawable.fire), unit = "kcal", value = runState.caloriesBurnt.toString())
-            Box(modifier = Modifier
-                .width(1.dp)
-                .fillMaxHeight()
-                .padding(vertical = 8.dp)
-                .align(Alignment.CenterVertically)
-                .background(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
-                ))
-            RunningStatsItem(modifier = Modifier,
-                             painter = painterResource(id = R.drawable.bolt),
-                             unit = "km/hr",
-                             value = runState.currentRunState.speedInKMH.toString())
+
+            RunningStatsItem(modifier = Modifier, unit = "km/hr", value = runState.currentRunState.speedInKMH.toString())
         }
 
     }
 }
 
 
+
+
 @Composable
 private fun RunningCardTime(modifier: Modifier = Modifier, durationInMillis: Long, isRunning: Boolean, onPlayPauseButtonClick: () -> Unit, onFinish: () -> Unit)
 {
     Row(modifier = modifier.fillMaxWidth()) {
+
         Column(modifier = Modifier.weight(1f)) {
             Text(text = "Running Time",
                  style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Normal),
@@ -130,29 +127,64 @@ private fun RunningCardTime(modifier: Modifier = Modifier, durationInMillis: Lon
                 style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.SemiBold),
             )
         }
+
         if (!isRunning && durationInMillis > 0)
         {
             IconButton(onClick = onFinish,
                        modifier = Modifier
+
                            .size(40.dp)
                            .background(color = MaterialTheme.colorScheme.error, shape = MaterialTheme.shapes.medium)
                            .align(Alignment.CenterVertically)) {
                 Icon(imageVector = ImageVector.vectorResource(id = R.drawable.ic_finish),
                      contentDescription = "",
-                     modifier = Modifier.size(16.dp),
+                     modifier = Modifier.size(24.dp),
                      tint = MaterialTheme.colorScheme.onError)
             }
             Spacer(modifier = Modifier.size(16.dp))
         }
         IconButton(onClick = onPlayPauseButtonClick,
                    modifier = Modifier
+
                        .size(40.dp)
                        .background(color = MaterialTheme.colorScheme.primary, shape = MaterialTheme.shapes.medium)
                        .align(Alignment.CenterVertically)) {
             Icon(imageVector = ImageVector.vectorResource(id = if (isRunning) R.drawable.ic_pause else R.drawable.ic_play),
                  contentDescription = "",
-                 modifier = Modifier.size(16.dp),
+                 modifier = Modifier.size(24.dp),
                  tint = MaterialTheme.colorScheme.onPrimary)
+        }
+    }
+}
+
+
+
+
+@Composable
+fun RunningStatsItem(
+    modifier: Modifier = Modifier,
+
+    unit: String,
+    value: String
+) {
+    Row(modifier = modifier.padding(4.dp)) {
+
+
+        Column(
+            modifier = Modifier
+                .padding(top = 8.dp),
+            horizontalAlignment = Alignment.End
+        ) {
+            Text(
+                text = value,
+                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold),
+            )
+            Text(
+                text = unit,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.labelSmall
+            )
         }
     }
 }

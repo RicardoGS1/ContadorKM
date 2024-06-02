@@ -1,7 +1,10 @@
-package com.virtualworld.contadorkm.core.data
+package com.virtualworld.contadorkm.core.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.virtualworld.contadorkm.core.data.db.RunDao
+import com.virtualworld.contadorkm.core.data.model.Run
+import com.virtualworld.contadorkm.core.data.util.RunSortOrder
 
 import kotlinx.coroutines.flow.Flow
 import java.util.Date

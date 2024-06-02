@@ -10,7 +10,6 @@ import com.virtualworld.contadorkm.core.location.model.PathPoint
 
 
 
-
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -24,7 +23,7 @@ import javax.inject.Singleton
 class TrackingManager @Inject constructor(
     private val locationTrackingManager: LocationTrackingManager,
     private val timeTracker: TimeTracker,
-    private val trackingServiceManager: TrackingServiceManager
+
 ) {
 
 
@@ -86,18 +85,26 @@ class TrackingManager @Inject constructor(
         }
     }
 
+
+
     fun startResumeTracking() {
         if (isTracking)
             return
+
+
         if (isFirst) {
             postInitialValue()
-            trackingServiceManager.startService()
+         //   trackingServiceManager.startService()
             isFirst = false
         }
+
         isTracking = true
         timeTracker.startResumeTimer(timeTrackerCallback)
         locationTrackingManager.registerCallback(locationCallback)
     }
+
+
+
 
     private fun addEmptyPolyLine() {
         _currentRunState.update {
@@ -116,7 +123,7 @@ class TrackingManager @Inject constructor(
 
     fun stop() {
         pauseTracking()
-        trackingServiceManager.stopService()
+      //  trackingServiceManager.stopService()
         timeTracker.stopTimer()
         postInitialValue()
         isFirst = true

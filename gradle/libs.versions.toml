@@ -22,6 +22,7 @@ lifecycleRuntimeCompose = "2.7.0"
 timber = "5.0.1"
 paging = "3.2.0"
 room = "2.6.1"
+firebaseFirestoreKtx = "25.0.0"
 
 [libraries]
 
@@ -64,6 +65,7 @@ timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 #paging
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

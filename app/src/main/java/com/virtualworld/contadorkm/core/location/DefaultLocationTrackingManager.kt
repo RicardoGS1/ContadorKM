@@ -12,7 +12,7 @@ import com.virtualworld.contadorkm.core.location.LocationTrackingManager
 import com.virtualworld.contadorkm.ui.hasLocationPermission
 import dagger.hilt.android.qualifiers.ApplicationContext
 
-
+//inicia un lupper para solicitar ultima ubicacion
 @SuppressLint("MissingPermission")
 class DefaultLocationTrackingManager constructor(
     private val fusedLocationProviderClient: FusedLocationProviderClient,

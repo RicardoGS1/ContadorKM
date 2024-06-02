@@ -1,4 +1,4 @@
-package com.virtualworld.contadorkm.core.data
+package com.virtualworld.contadorkm.core.data.db
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

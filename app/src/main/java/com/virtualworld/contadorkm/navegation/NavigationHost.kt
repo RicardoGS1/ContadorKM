@@ -5,8 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.virtualworld.contadorkm.ui.screen.HomeScreen
+
 import com.virtualworld.contadorkm.ui.screen.currentrun.CurrentRunScreen
+import com.virtualworld.contadorkm.ui.screen.home.HomeScreen
 
 
 @Composable
