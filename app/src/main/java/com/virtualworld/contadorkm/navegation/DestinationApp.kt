@@ -64,7 +64,7 @@ sealed class DestinationApp(val route: String)
 
     object Profile : DestinationApp(route = "profile")
 
-/*
+
     //global navigation
     companion object
     {
@@ -74,6 +74,6 @@ sealed class DestinationApp(val route: String)
         }
     }
 
- */
+
 
 }
