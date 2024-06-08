@@ -1,7 +1,6 @@
-package com.virtualworld.contadorkm.ui.screen.home
+package com.virtualworld.contadorkm.ui.screen.home.component
 
 import android.graphics.BitmapFactory
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -31,8 +30,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -44,11 +41,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.virtualworld.contadorkm.R
-import com.virtualworld.contadorkm.core.data.model.Gender
 import com.virtualworld.contadorkm.core.data.model.Run
 import com.virtualworld.contadorkm.domain.utils.RunUtils
 import com.virtualworld.contadorkm.domain.utils.RunUtils.getDisplayDate
-import com.virtualworld.contadorkm.ui.screen.currentrun.RunningStatsItem
 import com.virtualworld.contadorkm.ui.theme.md_theme_light_onSurface
 
 

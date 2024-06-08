@@ -1,4 +1,4 @@
-package com.virtualworld.contadorkm.ui.screen.currentrun
+package com.virtualworld.contadorkm.ui.screen.currentrun.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row

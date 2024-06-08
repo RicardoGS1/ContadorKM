@@ -1,4 +1,4 @@
-package com.virtualworld.contadorkm.ui.screen.currentrun
+package com.virtualworld.contadorkm.ui.screen.currentrun.component
 
 import android.graphics.Bitmap
 import androidx.compose.animation.AnimatedVisibility

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.virtualworld.contadorkm.core.data.model.Run
 import com.virtualworld.contadorkm.core.data.repository.AppRepository
 import com.virtualworld.contadorkm.core.location.TrackingManager
+import com.virtualworld.contadorkm.domain.usecases.GetCurrentRunStateUseCase
 import com.virtualworld.contadorkm.id.ApplicationScope
 import com.virtualworld.contadorkm.id.IoDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,63 +22,43 @@ import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val repository: AppRepository,
-    trackingManager: TrackingManager,
-    @ApplicationScope
-    private val externalScope: CoroutineScope,
-    @IoDispatcher
-    private val ioDispatcher: CoroutineDispatcher,
-    userRepository: UserRepository,
-    getCurrentRunStateWithCaloriesUseCase: GetCurrentRunStateWithCaloriesUseCase
-) : ViewModel() {
+class HomeViewModel @Inject constructor(private val repository: AppRepository,
+                                        trackingManager: TrackingManager,
+                                        @ApplicationScope private val externalScope: CoroutineScope,
+                                        @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+                                        getCurrentRunStateUseCase: GetCurrentRunStateUseCase) : ViewModel()
+{
 
     val durationInMillis = trackingManager.trackingDurationInMs
 
-    val doesUserExist = userRepository.doesUserExist
-        .stateIn(
-            viewModelScope,
-            SharingStarted.Lazily,
-            null
-        )
-
-    private val calendar = Calendar.getInstance()
-
-    private val distanceCoveredInThisWeekInMeter = repository.getTotalDistance(
-        calendar.setDateToWeekFirstDay().time,
-        calendar.setDateToWeekLastDay().time
-    )
-
     private val _homeScreenState = MutableStateFlow(HomeScreenState())
+
+    /*
+    copia en _homeScreenState las combinaciones de los flows que combina en
+     repository.getRunByDescDateWithLimit(3) y getCurrentRunStateUseCase()
+    */
     val homeScreenState = combine(
         repository.getRunByDescDateWithLimit(3),
-        getCurrentRunStateWithCaloriesUseCase(),
-        userRepository.user,
-        distanceCoveredInThisWeekInMeter,
+        getCurrentRunStateUseCase(),
         _homeScreenState,
-    ) { runList, runState, user, distanceInMeter, state ->
-        state.copy(
-            runList = runList,
-            currentRunStateWithCalories = runState,
-            user = user,
-            distanceCoveredInKmInThisWeek = distanceInMeter / 1000f
-        )
-    }.stateIn(
-        viewModelScope,
-        SharingStarted.Lazily,
-        HomeScreenState()
-    )
+    ) { runList, runState, state ->
+        state.copy(runList = runList, currentRunStateWithCalories = runState)
+
+    }.stateIn(viewModelScope, SharingStarted.Lazily, HomeScreenState())
+
 
     fun deleteRun(run: Run) = externalScope.launch(ioDispatcher) {
         dismissRunDialog()
         repository.deleteRun(run)
     }
 
-    fun showRun(run: Run) {
+    fun showRun(run: Run)
+    {
         _homeScreenState.update { it.copy(currentRunInfo = run) }
     }
 
-    fun dismissRunDialog() {
+    fun dismissRunDialog()
+    {
         _homeScreenState.update { it.copy(currentRunInfo = null) }
     }
 
