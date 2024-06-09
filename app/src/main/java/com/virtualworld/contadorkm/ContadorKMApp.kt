@@ -7,16 +7,4 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltAndroidApp
-class ContadorKMApp : Application()
-{
-
-
-
-    override fun onCreate() {
-        super.onCreate()
-
-
-    }
-
-
-}
+class ContadorKMApp : Application(){}
