@@ -30,6 +30,7 @@ import com.virtualworld.contadorkm.ui.utils.LocationPermissionRequestDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity()
 {
@@ -56,10 +57,11 @@ class MainActivity : ComponentActivity()
     private fun PermissionRequester()
     {
 
+
         var showPermissionDeclinedRationale by rememberSaveable { mutableStateOf(false) }
         var showRationale by rememberSaveable { mutableStateOf(false) }
 
-
+        //val especificar Contrato RequestMultiplePermissions
         val permissionLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestMultiplePermissions(), onResult = {
             it.forEach { (permission, isGranted) ->
                 if (!isGranted && locationPermissions.contains(permission))
@@ -70,6 +72,7 @@ class MainActivity : ComponentActivity()
         })
 
 
+        //determina en la primera recompocision el estado de los permisos
         LaunchedEffect(key1 = Unit) {
             when
             {
@@ -94,13 +97,14 @@ class MainActivity : ComponentActivity()
             }
         }
 
+        //Abre openAppSetting en caso de ser declinados
         if (showPermissionDeclinedRationale)
             LocationPermissionRequestDialog(onDismissClick = {
                 if (!hasLocationPermission()) finish()
                 else showPermissionDeclinedRationale = false
             }, onOkClick = { openAppSetting() })
 
-
+        //Mostrar dialogo para volver a solisitar permisos en caso de aver sido rechazados
         if (showRationale) LocationPermissionRequestDialog(onDismissClick = ::finish, onOkClick = {
             showRationale = false
             permissionLauncher.launch(locationPermissions)
@@ -109,18 +113,19 @@ class MainActivity : ComponentActivity()
 }
 
 
-
+//Lista de permisos
 val locationPermissions = listOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION).toTypedArray()
 
 
+//Chequear Permisos
 fun Context.hasLocationPermission() = locationPermissions.all {
     ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
 }
 
-
+//Open Setting de la app
 fun Context.openAppSetting()
 {
-    println("ve a setting")
+
     Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null)).also(::startActivity)
 }
 
