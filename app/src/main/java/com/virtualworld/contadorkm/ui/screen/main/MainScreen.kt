@@ -28,10 +28,10 @@ import kotlinx.coroutines.delay
 
 
 @Composable
-fun MainScreen(navHostController: NavHostController, viewModel: MainScreenViewModel = hiltViewModel())
+fun MainScreen(navHostController: NavHostController)
 {
-    //observar la navegación
-    val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+
+    val navBackStackEntry by navHostController.currentBackStackEntryAsState() //observar la navegación
 
     var shouldShowBottomNav by rememberSaveable { mutableStateOf(false) }//mostrar bottomBar para anmasoion
     var shouldShowFAB by rememberSaveable { mutableStateOf(false) }      //mostrar FAB para animacion
@@ -39,16 +39,17 @@ fun MainScreen(navHostController: NavHostController, viewModel: MainScreenViewMo
 
 
 
-    //modifica (hideBottomItems) para ocultar los botones si esta la screen is ruun o boarding
+    //modifica (hideBottomItems) para ocultar los botones si esta la screen is ruun
     hideBottomItems = when (navBackStackEntry?.destination?.route)
     {
         DestinationApp.CurrentRun.route -> true
-        DestinationApp.OnBoardingDestination.route -> true
+        /*
+        Otras routes donde sea ncesario ocultar BottomBar en el futuro
+         */
         else -> false
     }
 
-    //modifica (shouldShowFAB) (shouldShowBottomNav) para later hide los botonesBar and retrasa el efecto de bottom flotant
-    //se usa el launchefect para que soviver al chancger screen
+    //gestiona los tiempos y las estados de visibilidad ( shouldShowBottomNav  shouldShowFAB) de los botones de bottombar
     LaunchedEffect(hideBottomItems) {
         if (hideBottomItems)
         {
@@ -66,7 +67,7 @@ fun MainScreen(navHostController: NavHostController, viewModel: MainScreenViewMo
     }
 
 
-
+    // Scaffold de la app
     Scaffold(
         bottomBar = {
             AppBottomBar(navController = navHostController,visible = shouldShowBottomNav)
@@ -81,6 +82,7 @@ fun MainScreen(navHostController: NavHostController, viewModel: MainScreenViewMo
     ) {
 
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+           //NavegationHost
             Navigation(navHostController, it)
         }
     }

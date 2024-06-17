@@ -39,24 +39,20 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), bottomPadding: Dp = 0
                       deleteRun = viewModel::deleteRun,
                       showRun = viewModel::showRun,
                       dismissDialog = viewModel::dismissRunDialog,
-                      navigateToRunScreen = { DestinationApp.navigateToCurrentRunScreen(navController) },
-                      navigateToRunningHistoryScreen = {
-                          DestinationApp.Home.RecentRun.navigateToRunningHistoryScreen(navController)
-                      })
-
-
+                      navigateToRunScreen = { DestinationApp.navigateToCurrentRunScreen(navController) })
 }
 
 
 @Composable
-fun HomeScreenContent(bottomPadding: Dp = 0.dp,
-                      state: HomeScreenState,
-                      durationInMillis: Long,
-                      deleteRun: (Run) -> Unit,
-                      showRun: (Run) -> Unit,
-                      dismissDialog: () -> Unit,
-                      navigateToRunScreen: () -> Unit,
-                      navigateToRunningHistoryScreen: () -> Unit)
+fun HomeScreenContent(
+    bottomPadding: Dp = 0.dp,
+    state: HomeScreenState,
+    durationInMillis: Long,
+    deleteRun: (Run) -> Unit,
+    showRun: (Run) -> Unit,
+    dismissDialog: () -> Unit,
+    navigateToRunScreen: () -> Unit,
+)
 {
     Column {
 
@@ -66,8 +62,9 @@ fun HomeScreenContent(bottomPadding: Dp = 0.dp,
                 .padding(top = 28.dp)
                 .clickable(onClick = navigateToRunScreen),
             durationInMillis = durationInMillis,
-            runState = state.currentRunStateWithCalories,
+            runState = state.currentRunStateUI,
         )
+
         Row(modifier = Modifier
             .background(color = MaterialTheme.colorScheme.surface)
             .padding(vertical = 28.dp, horizontal = 24.dp)) {

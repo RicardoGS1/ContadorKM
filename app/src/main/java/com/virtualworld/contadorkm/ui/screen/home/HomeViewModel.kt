@@ -42,7 +42,7 @@ class HomeViewModel @Inject constructor(private val repository: AppRepository,
         getCurrentRunStateUseCase(),
         _homeScreenState,
     ) { runList, runState, state ->
-        state.copy(runList = runList, currentRunStateWithCalories = runState)
+        state.copy(runList = runList, currentRunStateUI = runState)
 
     }.stateIn(viewModelScope, SharingStarted.Lazily, HomeScreenState())
 

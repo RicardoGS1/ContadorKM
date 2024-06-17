@@ -30,19 +30,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.virtualworld.contadorkm.R
 import com.virtualworld.contadorkm.core.data.model.Run
-import com.virtualworld.contadorkm.domain.model.CurrentRunStateWithCalories
+import com.virtualworld.contadorkm.domain.model.CurrentRunStateUI
 import com.virtualworld.contadorkm.domain.utils.RunUtils
+import com.virtualworld.contadorkm.domain.utils.RunUtils.getDisplayDate
 
 
 @Composable
@@ -87,6 +91,87 @@ fun RecentRunList(
     }
 
 }
+
+@Composable
+fun RunItem(
+    modifier: Modifier = Modifier,
+    run: Run,
+    showTrailingIcon: Boolean = true
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        Image(
+            bitmap = run.img.asImageBitmap(),
+            contentDescription = null,
+            modifier = Modifier
+                .size(70.dp),
+            contentScale = ContentScale.Fit
+        )
+        Spacer(modifier = Modifier.size(16.dp))
+        RunInfo(
+            modifier = Modifier
+                .weight(1f),
+            run = run
+        )
+        if (showTrailingIcon)
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_forward),
+                contentDescription = "More info",
+                modifier = Modifier
+                    .size(16.dp)
+                    .align(Alignment.CenterVertically),
+                tint = MaterialTheme.colorScheme.onSurface
+            )
+    }
+}
+
+@Composable
+fun RunInfo(
+    modifier: Modifier = Modifier,
+    run: Run
+) {
+    Column(modifier) {
+        Text(
+            text = run.timestamp.getDisplayDate(),
+            style = MaterialTheme.typography.labelSmall.copy(
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontWeight = FontWeight.Normal
+            ),
+        )
+        Spacer(modifier = Modifier.size(12.dp))
+        Text(
+            text = "${(run.distanceInMeters / 1000f)} km",
+            style = MaterialTheme.typography.labelLarge.copy(
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        )
+        Spacer(modifier = Modifier.size(12.dp))
+        Row {
+            Text(
+                text = RunUtils.getFormattedStopwatchTime(run.durationInMillis),
+                style = MaterialTheme.typography.labelSmall.copy(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontWeight = FontWeight.Normal
+                ),
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            Text(
+                text = "${run.avgSpeedInKMH} km/hr",
+                style = MaterialTheme.typography.labelSmall.copy(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontWeight = FontWeight.Normal
+                ),
+            )
+        }
+    }
+}
+
+//**************************************************************************************************************************************************
+
+
+
 
 @Composable
 @Preview(showBackground = true)
@@ -142,7 +227,7 @@ fun EmptyRunListView(
 @Composable
 fun CurrentRunningCard(
     modifier: Modifier = Modifier,
-    runState: CurrentRunStateWithCalories,
+    runState: CurrentRunStateUI,
     durationInMillis: Long = 0
 ) {
     Row(
@@ -203,13 +288,7 @@ fun CurrentRunningCard(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             )
-            Spacer(modifier = Modifier.size(2.dp))
-            Text(
-                text = "${runState.caloriesBurnt} kcal",
-                style = MaterialTheme.typography.bodySmall.copy(
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            )
+
         }
     }
 }

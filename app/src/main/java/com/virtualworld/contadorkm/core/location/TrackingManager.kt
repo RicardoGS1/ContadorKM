@@ -7,7 +7,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.virtualworld.contadorkm.domain.utils.RunUtils
 import com.virtualworld.contadorkm.core.location.model.CurrentRunState
 import com.virtualworld.contadorkm.core.location.model.PathPoint
-
+import com.virtualworld.contadorkm.core.data.timer.TimeTracker
 
 
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +24,7 @@ class TrackingManager @Inject constructor(
     private val locationTrackingManager: LocationTrackingManager,
     private val timeTracker: TimeTracker,
 
-) {
+    ) {
 
 
     //actualiza currentrunstate solo is tracking

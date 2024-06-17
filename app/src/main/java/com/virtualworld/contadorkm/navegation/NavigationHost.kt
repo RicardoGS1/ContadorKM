@@ -19,33 +19,22 @@ fun Navigation(navController: NavHostController, paddingValues: PaddingValues = 
 @Composable
 private fun SetupNavGraph(navController: NavHostController, paddingValues: PaddingValues = PaddingValues())
 {
-    NavHost(navController = navController, startDestination = DestinationApp.Home.RecentRun.route) {
+    NavHost(navController = navController, startDestination = DestinationApp.Home.route) {
 
-        composable(route = DestinationApp.Home.RecentRun.route) {
+        composable(route = DestinationApp.Home.route) {
             HomeScreen(navController = navController, bottomPadding = paddingValues.calculateBottomPadding())
         }
 
-        composable(route = DestinationApp.Home.RunningHistory.route) {
-            // RunningHistoryScreen(
-            //     paddingValues = paddingValues,
-            //      navController = navController
-            //  )
-        }
 
         composable(route = DestinationApp.Profile.route) {
             // ProfileScreen(paddingValues.calculateBottomPadding())
         }
 
 
-
-
         composable(route = DestinationApp.CurrentRun.route, deepLinks = DestinationApp.CurrentRun.deepLinks) {
               CurrentRunScreen(navController)
         }
 
-        composable(route = DestinationApp.OnBoardingDestination.route) {
-            // OnBoardScreen(navController = navController)
-        }
     }
 
 }

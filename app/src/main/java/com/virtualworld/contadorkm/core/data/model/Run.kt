@@ -12,7 +12,6 @@ data class Run(
     var avgSpeedInKMH: Float = 0f,
     var distanceInMeters: Int = 0,
     var durationInMillis: Long = 0L,
-    var caloriesBurned: Int = 0,
 
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0

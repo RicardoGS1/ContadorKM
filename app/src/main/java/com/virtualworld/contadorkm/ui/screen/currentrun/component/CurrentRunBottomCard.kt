@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.virtualworld.contadorkm.R
 import com.virtualworld.contadorkm.domain.utils.RunUtils
 
-import com.virtualworld.contadorkm.domain.model.CurrentRunStateWithCalories
+import com.virtualworld.contadorkm.domain.model.CurrentRunStateUI
 import com.virtualworld.contadorkm.navegation.slideDownInDuration
 import com.virtualworld.contadorkm.navegation.slideDownOutDuration
 
@@ -45,7 +45,7 @@ import com.virtualworld.contadorkm.navegation.slideDownOutDuration
 fun CurrentRunBottomCard(visible: Boolean,
                          modifier: Modifier,
                          durationInMillis: Long = 0L,
-                         runState: CurrentRunStateWithCalories,
+                         runState: CurrentRunStateUI,
                          onPlayPauseButtonClick: () -> Unit = {},
                          onFinish: () -> Unit)
 {
@@ -65,7 +65,7 @@ fun CurrentRunBottomCard(visible: Boolean,
 @Composable
 fun RunningCard(modifier: Modifier = Modifier,
                 durationInMillis: Long = 0L,
-                runState: CurrentRunStateWithCalories,
+                runState: CurrentRunStateUI,
                 onPlayPauseButtonClick: () -> Unit = {},
                 onFinish: () -> Unit)
 {

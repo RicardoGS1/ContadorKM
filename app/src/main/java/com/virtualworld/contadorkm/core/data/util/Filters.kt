@@ -3,7 +3,6 @@ package com.virtualworld.contadorkm.core.data.util
 enum class RunSortOrder {
     DATE,
     DURATION,
-    CALORIES_BURNED,
     AVG_SPEED,
     DISTANCE;
 

@@ -1,4 +1,4 @@
-package com.virtualworld.contadorkm.core.location
+package com.virtualworld.contadorkm.core.data.timer
 
 
 import com.virtualworld.contadorkm.id.ApplicationScope

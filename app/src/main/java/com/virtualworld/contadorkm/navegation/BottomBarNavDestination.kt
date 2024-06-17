@@ -18,7 +18,7 @@ sealed class BottomBarNavDestination(val route: String, @DrawableRes val icon: I
     @Composable
     fun getIconVector() = ImageVector.vectorResource(icon)
     object Home : BottomBarNavDestination(
-        route = DestinationApp.Home.RecentRun.route,
+        route = DestinationApp.Home.route,
         icon =  R.drawable.ic_menu
     )
 

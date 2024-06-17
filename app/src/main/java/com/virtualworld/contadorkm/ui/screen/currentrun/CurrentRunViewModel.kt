@@ -6,10 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.virtualworld.contadorkm.core.data.model.Run
 import com.virtualworld.contadorkm.core.data.repository.AppRepository
 import com.virtualworld.contadorkm.core.location.TrackingManager
+import com.virtualworld.contadorkm.domain.model.CurrentRunStateUI
 
 import com.virtualworld.contadorkm.domain.usecases.GetCurrentRunStateUseCase
-
-import com.virtualworld.contadorkm.domain.model.CurrentRunStateWithCalories
 import com.virtualworld.contadorkm.id.ApplicationScope
 import com.virtualworld.contadorkm.id.IoDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,29 +30,28 @@ class CurrentRunViewModel @Inject constructor(private val trackingManager: Track
 {
 
 
-    //convierte en un StateFlow el flow que se encuentra en el uscaseGetCurrentWCal
-    val currentRunStateWithCal = getCurrentRunStateUseCase().stateIn(viewModelScope, SharingStarted.Lazily, CurrentRunStateWithCalories())
+    //convierte en un StateFlow el flow
+    val currentRunStateWithCal = getCurrentRunStateUseCase().stateIn(viewModelScope, SharingStarted.Lazily, CurrentRunStateUI())
 
     val runningDurationInMillis = trackingManager.trackingDurationInMs
 
     fun playPauseTracking()
     {
-        if (currentRunStateWithCal.value.currentRunState.isTracking)
-            trackingManager.pauseTracking()
-        else
-            trackingManager.startResumeTracking()
+        if (currentRunStateWithCal.value.currentRunState.isTracking) trackingManager.pauseTracking()
+        else trackingManager.startResumeTracking()
     }
 
     fun finishRun(bitmap: Bitmap)
     {
         trackingManager.pauseTracking()
+
         saveRun(Run(img = bitmap,
                     avgSpeedInKMH = currentRunStateWithCal.value.currentRunState.distanceInMeters.toBigDecimal().multiply(3600.toBigDecimal())
                         .divide(runningDurationInMillis.value.toBigDecimal(), 2, RoundingMode.HALF_UP).toFloat(),
                     distanceInMeters = currentRunStateWithCal.value.currentRunState.distanceInMeters,
                     durationInMillis = runningDurationInMillis.value,
-                    timestamp = Date(),
-                    caloriesBurned = currentRunStateWithCal.value.caloriesBurnt))
+                    timestamp = Date()))
+
         trackingManager.stop()
     }
 

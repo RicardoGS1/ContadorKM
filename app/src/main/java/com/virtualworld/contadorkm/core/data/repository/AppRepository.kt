@@ -25,9 +25,9 @@ class AppRepository @Inject constructor(
         when (sortingOrder) {
             RunSortOrder.DATE -> runDao.getAllRunSortByDate()
             RunSortOrder.DURATION -> runDao.getAllRunSortByDuration()
-            RunSortOrder.CALORIES_BURNED -> runDao.getAllRunSortByCaloriesBurned()
             RunSortOrder.AVG_SPEED -> runDao.getAllRunSortByAvgSpeed()
             RunSortOrder.DISTANCE -> runDao.getAllRunSortByDistance()
+
         }
     }
 
@@ -36,8 +36,6 @@ class AppRepository @Inject constructor(
     fun getTotalRunningDuration(fromDate: Date? = null, toDate: Date? = null): Flow<Long> =
         runDao.getTotalRunningDuration(fromDate, toDate)
 
-    fun getTotalCaloriesBurned(fromDate: Date? = null, toDate: Date? = null): Flow<Long> =
-        runDao.getTotalCaloriesBurned(fromDate, toDate)
 
     fun getTotalDistance(fromDate: Date? = null, toDate: Date? = null): Flow<Long> =
         runDao.getTotalDistance(fromDate, toDate)

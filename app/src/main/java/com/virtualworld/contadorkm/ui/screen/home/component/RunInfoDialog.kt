@@ -207,22 +207,7 @@ private fun RunStats(
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
                 )
         )
-        RunningStatsItem(
-            modifier = Modifier,
-            painter = painterResource(id = R.drawable.fire),
-            unit = "kcal",
-            value = run.caloriesBurned.toString()
-        )
-        Box(
-            modifier = Modifier
-                .width(1.dp)
-                .fillMaxHeight()
-                .padding(vertical = 8.dp)
-                .align(Alignment.CenterVertically)
-                .background(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
-                )
-        )
+
         RunningStatsItem(
             modifier = Modifier,
             painter = painterResource(id = R.drawable.bolt),
@@ -244,7 +229,7 @@ private fun RunInfoDialogPreview() {
             avgSpeedInKMH = 15.8f,
             distanceInMeters = 2500,
             durationInMillis = 5_400_000,
-            caloriesBurned = 2423,
+
         ),
         onDelete = {},
         onDismiss = {}
@@ -259,7 +244,7 @@ private fun RunInfoDialogPreview() {
 
 
 
-//component desidir si se mueve
+
 @Composable
 fun RunningStatsItem(
     modifier: Modifier = Modifier,
@@ -296,81 +281,9 @@ fun RunningStatsItem(
 }
 
 
-@Composable
-fun RunItem(
-    modifier: Modifier = Modifier,
-    run: Run,
-    showTrailingIcon: Boolean = true
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-    ) {
-        Image(
-            bitmap = run.img.asImageBitmap(),
-            contentDescription = null,
-            modifier = Modifier
-                .size(70.dp),
-            contentScale = ContentScale.Fit
-        )
-        Spacer(modifier = Modifier.size(16.dp))
-        RunInfo(
-            modifier = Modifier
-                .weight(1f),
-            run = run
-        )
-        if (showTrailingIcon)
-            Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_forward),
-                contentDescription = "More info",
-                modifier = Modifier
-                    .size(16.dp)
-                    .align(Alignment.CenterVertically),
-                tint = MaterialTheme.colorScheme.onSurface
-            )
-    }
-}
 
 
-@Composable
-private fun RunInfo(
-    modifier: Modifier = Modifier,
-    run: Run
-) {
-    Column(modifier) {
-        Text(
-            text = run.timestamp.getDisplayDate(),
-            style = MaterialTheme.typography.labelSmall.copy(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontWeight = FontWeight.Normal
-            ),
-        )
-        Spacer(modifier = Modifier.size(12.dp))
-        Text(
-            text = "${(run.distanceInMeters / 1000f)} km",
-            style = MaterialTheme.typography.labelLarge.copy(
-                color = MaterialTheme.colorScheme.onSurface
-            )
-        )
-        Spacer(modifier = Modifier.size(12.dp))
-        Row {
-            Text(
-                text = "${run.caloriesBurned} kcal",
-                style = MaterialTheme.typography.labelSmall.copy(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    fontWeight = FontWeight.Normal
-                ),
-            )
-            Spacer(modifier = Modifier.size(8.dp))
-            Text(
-                text = "${run.avgSpeedInKMH} km/hr",
-                style = MaterialTheme.typography.labelSmall.copy(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    fontWeight = FontWeight.Normal
-                ),
-            )
-        }
-    }
-}
+
+
 
 
