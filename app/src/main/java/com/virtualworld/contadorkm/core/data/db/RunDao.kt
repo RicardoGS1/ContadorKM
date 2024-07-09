@@ -19,6 +19,88 @@ interface RunDao {
     @Delete
     suspend fun deleteRun(run: Run)
 
+
+//Distace****************************************************************************
+    @Query(
+        "SELECT TOTAL(distanceInMeters) FROM running_table WHERE " +
+                "(:fromDate IS NULL OR timestamp >= :fromDate) AND " +
+                "(:toDate IS NULL OR timestamp <= :toDate) " +
+                "ORDER BY timestamp DESC"
+    )
+    fun getTotalDistance(fromDate: Date?, toDate: Date?): Flow<Long>
+
+
+    @Query(
+        "SELECT MAX(distanceInMeters) FROM running_table WHERE " +
+                "(:fromDate IS NULL OR timestamp >= :fromDate) AND " +
+                "(:toDate IS NULL OR timestamp <= :toDate) " +
+                "ORDER BY timestamp DESC"
+    )
+    fun getMaxDistance(fromDate: Date?, toDate: Date?): Flow<Long>
+
+
+    @Query(
+        "SELECT AVG(distanceInMeters) FROM running_table WHERE " +
+                "(:fromDate IS NULL OR timestamp >= :fromDate) AND " +
+                "(:toDate IS NULL OR timestamp <= :toDate) " +
+                "ORDER BY timestamp DESC"
+    )
+    fun getAvgDistance(fromDate: Date?, toDate: Date?): Flow<Long>
+    
+//************************************************************************************************
+
+    @Query(
+        "SELECT TOTAL(durationInMillis) FROM running_table WHERE " +
+                "(:fromDate IS NULL OR timestamp >= :fromDate) AND " +
+                "(:toDate IS NULL OR timestamp <= :toDate) " +
+                "ORDER BY timestamp DESC"
+    )
+    fun getTotalTime(fromDate: Date?, toDate: Date?): Flow<Long>
+
+
+    @Query(
+        "SELECT MAX(durationInMillis) FROM running_table WHERE " +
+                "(:fromDate IS NULL OR timestamp >= :fromDate) AND " +
+                "(:toDate IS NULL OR timestamp <= :toDate) " +
+                "ORDER BY timestamp DESC"
+    )
+    fun getMaxTime(fromDate: Date?, toDate: Date?): Flow<Long>
+
+
+    @Query(
+        "SELECT AVG(durationInMillis) FROM running_table WHERE " +
+                "(:fromDate IS NULL OR timestamp >= :fromDate) AND " +
+                "(:toDate IS NULL OR timestamp <= :toDate) " +
+                "ORDER BY timestamp DESC"
+    )
+    fun getAvgTime(fromDate: Date?, toDate: Date?): Flow<Long>
+
+
+//**************************************************************************************
+
+    @Query(
+        "SELECT MAX(avgSpeedInKMH) FROM running_table WHERE " +
+                "(:fromDate IS NULL OR timestamp >= :fromDate) AND " +
+                "(:toDate IS NULL OR timestamp <= :toDate) " +
+                "ORDER BY timestamp DESC"
+    )
+    fun getMaxSpeed(fromDate: Date?, toDate: Date?): Flow<Long>
+
+
+    @Query(
+        "SELECT AVG(avgSpeedInKMH) FROM running_table WHERE " +
+                "(:fromDate IS NULL OR timestamp >= :fromDate) AND " +
+                "(:toDate IS NULL OR timestamp <= :toDate) " +
+                "ORDER BY timestamp DESC"
+    )
+    fun getAvgSpeed(fromDate: Date?, toDate: Date?): Flow<Long>
+
+
+//**************************************************************************************
+
+
+
+
     @Query("SELECT * FROM running_table ORDER BY timestamp DESC")
     fun getAllRunSortByDate(): PagingSource<Int, Run>
 
@@ -29,8 +111,8 @@ interface RunDao {
     @Query("SELECT * FROM running_table ORDER BY avgSpeedInKMH DESC")
     fun getAllRunSortByAvgSpeed(): PagingSource<Int, Run>
 
-    @Query("SELECT * FROM running_table ORDER BY distanceInMeters DESC")
-    fun getAllRunSortByDistance(): PagingSource<Int, Run>
+  //  @Query("SELECT * FROM running_table ORDER BY distanceInMeters DESC")
+ //   fun getAllRunSortByDistance():Flow<Long>
 
     @Query("SELECT * FROM running_table ORDER BY timestamp DESC LIMIT :limit")
     fun getRunByDescDateWithLimit(limit: Int): Flow<List<Run>>
@@ -48,13 +130,7 @@ interface RunDao {
 
 
 
-    @Query(
-        "SELECT TOTAL(distanceInMeters) FROM running_table WHERE " +
-                "(:fromDate IS NULL OR timestamp >= :fromDate) AND " +
-                "(:toDate IS NULL OR timestamp <= :toDate) " +
-                "ORDER BY timestamp DESC"
-    )
-    fun getTotalDistance(fromDate: Date?, toDate: Date?): Flow<Long>
+
 
     @Query(
         "SELECT AVG(avgSpeedInKMH) FROM running_table WHERE " +

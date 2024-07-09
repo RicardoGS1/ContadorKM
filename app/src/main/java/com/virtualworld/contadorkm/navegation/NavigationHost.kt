@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 
 import com.virtualworld.contadorkm.ui.screen.currentrun.CurrentRunScreen
 import com.virtualworld.contadorkm.ui.screen.home.HomeScreen
+import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreen
 
 
 @Composable
@@ -27,7 +28,7 @@ private fun SetupNavGraph(navController: NavHostController, paddingValues: Paddi
 
 
         composable(route = DestinationApp.Profile.route) {
-            // ProfileScreen(paddingValues.calculateBottomPadding())
+            ResumeScreen(navController = navController, bottomPadding = paddingValues.calculateBottomPadding())
         }
 
 

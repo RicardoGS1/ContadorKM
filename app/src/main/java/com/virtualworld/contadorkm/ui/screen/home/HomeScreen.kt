@@ -56,6 +56,7 @@ fun HomeScreenContent(
 {
     Column {
 
+        //card que puestra la carrera en proceso
         if (durationInMillis > 0) CurrentRunningCard(
             modifier = Modifier
                 .padding(horizontal = 24.dp)
@@ -65,6 +66,7 @@ fun HomeScreenContent(
             runState = state.currentRunStateUI,
         )
 
+        //
         Row(modifier = Modifier
             .background(color = MaterialTheme.colorScheme.surface)
             .padding(vertical = 28.dp, horizontal = 24.dp)) {
@@ -74,6 +76,7 @@ fun HomeScreenContent(
 
         }
 
+        //column de lista de carreras
         Column(modifier = Modifier
             .weight(1f)
             .verticalScroll(rememberScrollState())
