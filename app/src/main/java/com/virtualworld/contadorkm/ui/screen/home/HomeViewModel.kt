@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(private val repository: AppRepository,
      repository.getRunByDescDateWithLimit(3) y getCurrentRunStateUseCase()
     */
     val homeScreenState = combine(
-        repository.getRunByDescDateWithLimit(3),
+        repository.getRunByDescDateWithLimit(100),
         getCurrentRunStateUseCase(),
         _homeScreenState,
     ) { runList, runState, state ->

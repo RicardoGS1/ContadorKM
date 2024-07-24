@@ -4,6 +4,7 @@ import android.location.Location
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
+import com.sdevprem.runtrack.core.tracking.service.TrackingServiceManager
 import com.virtualworld.contadorkm.domain.utils.RunUtils
 import com.virtualworld.contadorkm.core.location.model.CurrentRunState
 import com.virtualworld.contadorkm.core.location.model.PathPoint
@@ -23,7 +24,7 @@ import javax.inject.Singleton
 class TrackingManager @Inject constructor(
     private val locationTrackingManager: LocationTrackingManager,
     private val timeTracker: TimeTracker,
-
+    private val trackingServiceManager: TrackingServiceManager
     ) {
 
 
@@ -94,7 +95,7 @@ class TrackingManager @Inject constructor(
 
         if (isFirst) {
             postInitialValue()
-         //   trackingServiceManager.startService()
+            trackingServiceManager.startService()
             isFirst = false
         }
 
@@ -123,7 +124,7 @@ class TrackingManager @Inject constructor(
 
     fun stop() {
         pauseTracking()
-      //  trackingServiceManager.stopService()
+        trackingServiceManager.stopService()
         timeTracker.stopTimer()
         postInitialValue()
         isFirst = true
