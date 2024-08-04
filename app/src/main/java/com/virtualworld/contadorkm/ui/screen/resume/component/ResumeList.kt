@@ -20,13 +20,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.virtualworld.contadorkm.domain.utils.RunUtils.getFormattedStopwatchTime
-import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateDistance
+import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateDistances
 import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateSpeed
 import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateTime
 
 
 @Composable
-fun ResumeList(stateDistance: ResumeScreenStateDistance, stateTime: ResumeScreenStateTime, stateSpeed: ResumeScreenStateSpeed)
+fun ResumeList(stateDistance: ResumeScreenStateDistances, stateTime: ResumeScreenStateTime, stateSpeed: ResumeScreenStateSpeed)
 {
 
     //RunUtils.getFormattedStopwatchTime
@@ -55,17 +55,14 @@ fun ItemResumeSpeed(stateSpeed: ResumeScreenStateSpeed)
 }
 
 @Composable
-fun ItemResumeDistance(stateDistance: ResumeScreenStateDistance)
+fun ItemResumeDistance(stateDistance: ResumeScreenStateDistances)
 {
-    when (stateDistance)
-    {
-        is ResumeScreenStateDistance.Error -> ErrorItem()
-        is ResumeScreenStateDistance.Loading -> LoadingItem()
-        is ResumeScreenStateDistance.Success -> SuccessItem(stateDistance.name,
+
+        SuccessItem(stateDistance.name,
                                                             stateDistance.distanceMax.toString(),
                                                             stateDistance.distanceAvg.toString(),
                                                             stateDistance.distanceTotal.toString())
-    }
+
 }
 
 @Composable

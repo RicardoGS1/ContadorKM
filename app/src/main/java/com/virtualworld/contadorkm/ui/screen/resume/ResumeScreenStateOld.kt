@@ -7,11 +7,7 @@ sealed class ResumeScreenStateTime {
     object Error : ResumeScreenStateTime()
 }
 
-sealed class ResumeScreenStateDistance {
-    object Loading : ResumeScreenStateDistance()
-    data class Success( val name: String = "Distancia" , val distanceTotal: Long, val distanceMax: Long, val distanceAvg: Long) : ResumeScreenStateDistance()
-    object Error : ResumeScreenStateDistance()
-}
+
 
 
 sealed class ResumeScreenStateSpeed {

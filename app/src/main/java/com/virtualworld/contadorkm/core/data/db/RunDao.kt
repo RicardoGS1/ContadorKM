@@ -27,7 +27,7 @@ interface RunDao {
                 "(:toDate IS NULL OR timestamp <= :toDate) " +
                 "ORDER BY timestamp DESC"
     )
-    fun getTotalDistance(fromDate: Date?, toDate: Date?): Flow<Long>
+    suspend fun getTotalDistance(fromDate: Date?, toDate: Date?):  Long
 
 
     @Query(
@@ -36,7 +36,7 @@ interface RunDao {
                 "(:toDate IS NULL OR timestamp <= :toDate) " +
                 "ORDER BY timestamp DESC"
     )
-    fun getMaxDistance(fromDate: Date?, toDate: Date?): Flow<Long>
+    suspend fun getMaxDistance(fromDate: Date?, toDate: Date?): Long
 
 
     @Query(
@@ -45,7 +45,7 @@ interface RunDao {
                 "(:toDate IS NULL OR timestamp <= :toDate) " +
                 "ORDER BY timestamp DESC"
     )
-    fun getAvgDistance(fromDate: Date?, toDate: Date?): Flow<Long>
+    suspend fun getAvgDistance(fromDate: Date?, toDate: Date?): Long
     
 //************************************************************************************************
 
