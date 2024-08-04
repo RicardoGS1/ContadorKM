@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.dp
 import com.virtualworld.contadorkm.domain.utils.RunUtils.getFormattedStopwatchTime
 import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateDistances
 import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateSpeed
-import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateTime
+import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateTimes
 
 
 @Composable
-fun ResumeList(stateDistance: ResumeScreenStateDistances, stateTime: ResumeScreenStateTime, stateSpeed: ResumeScreenStateSpeed)
+fun ResumeList(stateDistance: ResumeScreenStateDistances, stateTime: ResumeScreenStateTimes, stateSpeed: ResumeScreenStateSpeed)
 {
 
     //RunUtils.getFormattedStopwatchTime
@@ -58,25 +58,25 @@ fun ItemResumeSpeed(stateSpeed: ResumeScreenStateSpeed)
 fun ItemResumeDistance(stateDistance: ResumeScreenStateDistances)
 {
 
-        SuccessItem(stateDistance.name,
-                                                            stateDistance.distanceMax.toString(),
-                                                            stateDistance.distanceAvg.toString(),
-                                                            stateDistance.distanceTotal.toString())
+    SuccessItem(
+        stateDistance.name,
+        stateDistance.distanceMax.toString(),
+        stateDistance.distanceAvg.toString(),
+        stateDistance.distanceTotal.toString(),
+    )
 
 }
 
 @Composable
-private fun ItemResumeTime(stateTime: ResumeScreenStateTime)
+private fun ItemResumeTime(stateTime: ResumeScreenStateTimes)
 {
-    when (stateTime)
-    {
-        is ResumeScreenStateTime.Error -> ErrorItem()
-        is ResumeScreenStateTime.Loading -> LoadingItem()
-        is ResumeScreenStateTime.Success -> SuccessItem(stateTime.name,
-                                                        getFormattedStopwatchTime(stateTime.timeMax),
-                                                        getFormattedStopwatchTime(stateTime.timeAvg),
-                                                        getFormattedStopwatchTime(stateTime.timeTotal))
-    }
+
+    SuccessItem(
+        stateTime.name,
+        getFormattedStopwatchTime(stateTime.timeMax),
+        getFormattedStopwatchTime(stateTime.timeAvg),
+        getFormattedStopwatchTime(stateTime.timeTotal),
+    )
 
 }
 

@@ -9,9 +9,9 @@ data class ResumeScreenStateDistances(
 
 data class ResumeScreenStateTimes(
     val name: String = "Tiempo",
-    val timeTotal: Long,
-    val timeMax: Long,
-    val timeAvg: Long,
+    val timeTotal: Long=0,
+    val timeMax: Long=0,
+    val timeAvg: Long=0,
 )
 
 data class ResumeScreenStateSpeeds(

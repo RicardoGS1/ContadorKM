@@ -22,8 +22,8 @@ import javax.inject.Inject
 class ResumeViewModel @Inject constructor(val repository: AppRepository) : ViewModel()
 {
 
-    private val _resumeScreenStateTime = MutableStateFlow<ResumeScreenStateTime>(ResumeScreenStateTime.Loading)
-    val resumeScreenStateTime: StateFlow<ResumeScreenStateTime> = _resumeScreenStateTime
+    private val _resumeScreenStateTime = MutableStateFlow<ResumeScreenStateTimes>(ResumeScreenStateTimes())
+    val resumeScreenStateTime: StateFlow<ResumeScreenStateTimes> = _resumeScreenStateTime
 
     private val _resumeScreenStateDistance = MutableStateFlow<ResumeScreenStateDistances>(ResumeScreenStateDistances())
     val resumeScreenStateDistance: StateFlow<ResumeScreenStateDistances> = _resumeScreenStateDistance
@@ -114,66 +114,28 @@ class ResumeViewModel @Inject constructor(val repository: AppRepository) : ViewM
 
 
 //*********************************************************************************************************************
-    /*
-          viewModelScope.launch {
-              try
-              {
-                  println(fromDate)
-
-                  combine(
-                      repository.getTotalDistance(fromDate),
-                      repository.getMaxDistance(fromDate),
-                      repository.getAvgDistance(fromDate),
-                  ) { totalDistance, maxDistance, avgDistance ->
-
-                      ResumeScreenStateDistance.Success(distanceTotal = totalDistance, distanceMax = maxDistance, distanceAvg = avgDistance)
-
-
-                  }.collect {
-                      _resumeScreenStateDistance.value = it
-                  }
-
-
-              } catch (e: Exception)
-              {
-                  _resumeScreenStateDistance.value = ResumeScreenStateDistance.Error
-              }
-
-          }
-
-
-     */
 
 
     private fun getFromTime(fromDate: Date?)
     {
 
-        viewModelScope.launch {
-            try
+        repository.getTimes(fromDate).onEach { state ->
+            when (state)
             {
-                println(fromDate)
 
-                combine(
-                    repository.getTotalTime(fromDate),
-                    repository.getMaxTime(fromDate),
-                    repository.getAvgTime(fromDate),
-                ) { totalDistance, maxDistance, avgDistance ->
+                is NetworkResponseState.Loading -> println("Loading")
+                is NetworkResponseState.Error -> println("Error")
+                is NetworkResponseState.Success ->
+                {
 
-                    ResumeScreenStateTime.Success(timeTotal = totalDistance, timeMax = maxDistance, timeAvg = avgDistance)
+                    _resumeScreenStateTime.update {
+                        it.copy(timeTotal = state.result.timeTotal, timeAvg = state.result.timeAvg, timeMax = state.result.timeMax)
+                    }
 
 
-                }.collect {
-                    _resumeScreenStateTime.value = it
                 }
-
-
-            } catch (e: Exception)
-            {
-                _resumeScreenStateTime.value = ResumeScreenStateTime.Error
             }
-
-        }
-
+        }.launchIn(viewModelScope)
 
     }
 }

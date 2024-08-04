@@ -54,7 +54,7 @@ fun ResumeScreen(viewModel: ResumeViewModel = hiltViewModel(), bottomPadding: Dp
 @Composable
 fun ResumeScreenContent(bottomPadding: Dp,
                         stateDistance: ResumeScreenStateDistances,
-                        stateTime: ResumeScreenStateTime,
+                        stateTime: ResumeScreenStateTimes,
                         stateSpeed: ResumeScreenStateSpeed,
                         viewModel: ResumeViewModel)
 {

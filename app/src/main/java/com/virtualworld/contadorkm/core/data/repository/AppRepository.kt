@@ -4,8 +4,10 @@ import com.virtualworld.contadorkm.core.data.db.RunDao
 import com.virtualworld.contadorkm.core.data.model.Run
 import com.virtualworld.contadorkm.core.location.model.NetworkResponseState
 import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateDistances
+import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateTimes
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import java.util.Date
 import javax.inject.Inject
@@ -45,14 +47,50 @@ class AppRepository @Inject constructor(private val runDao: RunDao)
 
     //******************************************************************************************
 
+    fun getTimes(fromDate: Date? = null, toDate: Date? = null): Flow<NetworkResponseState<ResumeScreenStateTimes>>
+    {
 
-    fun getTotalTime(fromDate: Date? = null, toDate: Date? = null): Flow<Long> = runDao.getTotalTime(fromDate, toDate)
+        return flow {
+            emit(NetworkResponseState.Loading)
+            try
+            {
+                combine(runDao.getTotalTime(fromDate, toDate),
+                        runDao.getMaxTime(fromDate, toDate),
+                        runDao.getAvgTime(fromDate, toDate)) { totalTime, maxTime, avgTime ->
+                    ResumeScreenStateTimes(timeTotal = totalTime, timeMax = maxTime, timeAvg = avgTime)
+                }.collect { times ->
+                    emit(NetworkResponseState.Success(times))
+                }
+            } catch (e: Exception)
+            {
+                emit(NetworkResponseState.Error(e))
+            }
 
-    fun getMaxTime(fromDate: Date? = null, toDate: Date? = null): Flow<Long> = runDao.getMaxTime(fromDate, toDate)
+            /*
+        return flow {
+            emit(NetworkResponseState.Loading)
+            try
+            {
+                val timeTotal = runDao.getTotalTime(fromDate, toDate)
+                val timeMax = runDao.getMaxTime(fromDate, toDate)
+                val timeAvg = runDao.getAvgTime(fromDate, toDate)
+
+                emit(NetworkResponseState.Success(ResumeScreenStateTimes(
+                    timeTotal = timeTotal,
+                    timeMax = timeMax,
+                    timeAvg = timeAvg,
+                )))
+
+            } catch (e: Exception)
+            {
+                emit(NetworkResponseState.Error(e))
+            }
+        }
 
 
-    fun getAvgTime(fromDate: Date? = null, toDate: Date? = null): Flow<Long> = runDao.getAvgTime(fromDate, toDate)
-
+ */
+        }
+    }
     //************************************************************************************
 
     fun getMaxSpeed(fromDate: Date? = null, toDate: Date? = null): Flow<Long> = runDao.getMaxSpeed(fromDate, toDate)
