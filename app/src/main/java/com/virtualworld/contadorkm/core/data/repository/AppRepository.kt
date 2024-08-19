@@ -2,9 +2,9 @@ package com.virtualworld.contadorkm.core.data.repository
 
 import com.virtualworld.contadorkm.core.data.db.RunDao
 import com.virtualworld.contadorkm.core.data.model.Run
-import com.virtualworld.contadorkm.core.location.model.NetworkResponseState
-import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateDistances
-import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateTimes
+import com.virtualworld.contadorkm.common.NetworkResponseState
+import com.virtualworld.contadorkm.ui.screen.resume.resumeState.ResumeScreenStateDistances
+import com.virtualworld.contadorkm.ui.screen.resume.resumeState.ResumeScreenStateTimes
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -66,29 +66,6 @@ class AppRepository @Inject constructor(private val runDao: RunDao)
                 emit(NetworkResponseState.Error(e))
             }
 
-            /*
-        return flow {
-            emit(NetworkResponseState.Loading)
-            try
-            {
-                val timeTotal = runDao.getTotalTime(fromDate, toDate)
-                val timeMax = runDao.getMaxTime(fromDate, toDate)
-                val timeAvg = runDao.getAvgTime(fromDate, toDate)
-
-                emit(NetworkResponseState.Success(ResumeScreenStateTimes(
-                    timeTotal = timeTotal,
-                    timeMax = timeMax,
-                    timeAvg = timeAvg,
-                )))
-
-            } catch (e: Exception)
-            {
-                emit(NetworkResponseState.Error(e))
-            }
-        }
-
-
- */
         }
     }
     //************************************************************************************

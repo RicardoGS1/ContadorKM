@@ -20,9 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.virtualworld.contadorkm.domain.utils.RunUtils.getFormattedStopwatchTime
-import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateDistances
-import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateSpeed
-import com.virtualworld.contadorkm.ui.screen.resume.ResumeScreenStateTimes
+import com.virtualworld.contadorkm.ui.screen.resume.resumeState.ResumeScreenStateDistances
+import com.virtualworld.contadorkm.ui.screen.resume.resumeState.ResumeScreenStateSpeed
+import com.virtualworld.contadorkm.ui.screen.resume.resumeState.ResumeScreenStateTimes
 
 
 @Composable

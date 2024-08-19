@@ -2,10 +2,11 @@ package com.virtualworld.contadorkm.ui.screen.resume
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +27,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.virtualworld.contadorkm.ui.screen.resume.component.ResumeList
+import com.virtualworld.contadorkm.ui.screen.resume.resumeState.ResumeScreenStateDistances
+import com.virtualworld.contadorkm.ui.screen.resume.resumeState.ResumeScreenStateSpeed
+import com.virtualworld.contadorkm.ui.screen.resume.resumeState.ResumeScreenStateTimes
+import com.virtualworld.contadorkm.ui.screen.resume.resumeState.TimeRange
 
 @Composable
 fun ResumeScreen(viewModel: ResumeViewModel = hiltViewModel(), bottomPadding: Dp = 0.dp, navController: NavController){
@@ -59,20 +64,14 @@ fun ResumeScreenContent(bottomPadding: Dp,
                         viewModel: ResumeViewModel)
 {
 
-    val options = listOf(
-        "Todo",
-        "Ano",
-        "Mes",
-        "Semana",
 
-    )
 
     var selectedOption by remember {
-        mutableStateOf("Todo")
+        mutableStateOf<TimeRange>(TimeRange.All)
     }
-    val onSelectionChange = { text: String ->
-        selectedOption = text
-       viewModel.onSelectionChange(text)
+    val onSelectionChange = { timeRange: TimeRange ->
+        selectedOption = timeRange
+       viewModel.onSelectionChange(timeRange)
     }
 
 
@@ -85,40 +84,44 @@ fun ResumeScreenContent(bottomPadding: Dp,
             .padding(16.dp)
             .align(Alignment.CenterHorizontally))
 
-       // MaterialButtonToggleGroup()
 
-        //CustomRadioGroup()
+        TimeRangeSelector(selectedOption, onSelectionChange)
 
-        Row(modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,){
+        ResumeList(stateDistance, stateTime, stateSpeed)
 
-            options.forEach {
-                Button(
-
-                    colors = ButtonDefaults.buttonColors(
-
-                        containerColor = if (it == selectedOption) { MaterialTheme.colorScheme.primary} else {Color( Color.LightGray.value)},
-                       // contentColor = Color(0xFFFFEE58)
-                    ),
-
-                    onClick = {onSelectionChange(it) }
-                ) {
-                    Text(text = it)
-                }
-            }
-
-
-
-        }
-
-
-
-        ResumeList(stateDistance,stateTime,stateSpeed)
     }
 
 
+}
 
+@Composable
+fun TimeRangeSelector(
+    selectedOption: TimeRange,
+    onSelectionChange: (TimeRange) -> Unit
+) {
+    LazyRow(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceAround
+    ) {
+        items(TimeRange.valores()) { timeRange ->
+            TimeRangeButton(timeRange, timeRange == selectedOption, onSelectionChange)
+        }
+    }
+}
 
+@Composable
+fun TimeRangeButton(
+    timeRange: TimeRange,
+    selected: Boolean,
+    onSelectionChange: (TimeRange) -> Unit
+) {
+    Button(
+        colors = ButtonDefaults.buttonColors(
+            containerColor = if (selected) { MaterialTheme.colorScheme.primary} else {Color( Color.LightGray.value)}),
+        onClick = { onSelectionChange(timeRange) }
+    ) {
+        Text(text = timeRange.description)
+    }
 }
 
 

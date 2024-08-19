@@ -3,10 +3,14 @@ package com.virtualworld.contadorkm.ui.screen.resume
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.virtualworld.contadorkm.core.data.repository.AppRepository
-import com.virtualworld.contadorkm.core.location.model.NetworkResponseState
+import com.virtualworld.contadorkm.common.NetworkResponseState
 import com.virtualworld.contadorkm.domain.utils.DateUtils.getFirstDayOfCurrentYear
 import com.virtualworld.contadorkm.domain.utils.DateUtils.getFirstDayOfMonth
 import com.virtualworld.contadorkm.domain.utils.DateUtils.getFirstDayOfWeek
+import com.virtualworld.contadorkm.ui.screen.resume.resumeState.ResumeScreenStateDistances
+import com.virtualworld.contadorkm.ui.screen.resume.resumeState.ResumeScreenStateSpeed
+import com.virtualworld.contadorkm.ui.screen.resume.resumeState.ResumeScreenStateTimes
+import com.virtualworld.contadorkm.ui.screen.resume.resumeState.TimeRange
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,16 +39,14 @@ class ResumeViewModel @Inject constructor(val repository: AppRepository) : ViewM
     val fromDate: StateFlow<Date?> = _fromDate
 
 
-    fun onSelectionChange(text: String)
-    {
+
+    fun onSelectionChange(timeRange: TimeRange) {
         _fromDate.update {
-            when (text)
-            {
-                "Semana" -> getFirstDayOfWeek()
-                "Mes" -> getFirstDayOfMonth()
-                "Ano" -> getFirstDayOfCurrentYear()
-                "Todo" -> null
-                else -> null // Manejo de casos no esperados
+            when (timeRange) {
+                TimeRange.Week -> getFirstDayOfWeek()
+                TimeRange.Month -> getFirstDayOfMonth()
+                TimeRange.Year -> getFirstDayOfCurrentYear()
+                TimeRange.All -> null
             }
         }
     }

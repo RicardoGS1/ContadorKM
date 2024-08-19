@@ -1,4 +1,4 @@
-package com.virtualworld.contadorkm.ui.screen.resume
+package com.virtualworld.contadorkm.ui.screen.resume.resumeState
 
 
 sealed class ResumeScreenStateTime {

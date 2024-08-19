@@ -1,4 +1,4 @@
-package com.virtualworld.contadorkm.core.location.model
+package com.virtualworld.contadorkm.common
 
 sealed class NetworkResponseState<out T : Any>
 {
